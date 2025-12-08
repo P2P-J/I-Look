@@ -1,0 +1,57 @@
+/* I Look - Injected CSS */
+/* AI 사이트에 주입되는 전역 스타일 */
+
+/* 부드러운 전환 효과 */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* 스크롤바 커스터마이징 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* 선택 텍스트 색상 */
+::selection {
+  background: rgba(102, 126, 234, 0.3);
+}
+
+/* 포커스 효과 */
+input:focus,
+textarea:focus {
+  outline: 2px solid rgba(102, 126, 234, 0.5) !important;
+  outline-offset: 2px !important;
+}
+
+/* 버튼 호버 효과 */
+button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* 링크 호버 효과 */
+a:hover {
+  opacity: 0.8;
+}
+
+/* 애니메이션 감소 옵션 (접근성) */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
