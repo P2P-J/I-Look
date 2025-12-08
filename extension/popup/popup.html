@@ -1,192 +1,243 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I Look</title>
-  <link rel="stylesheet" href="popup.css">
-</head>
-<body>
-  <div class="container">
-    <!-- 헤더 -->
-    <header class="header">
-      <div class="logo">
-        <span class="logo-icon">👁️</span>
-        <h1>I Look</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>I Look</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- 헤더 -->
+      <header class="header">
+        <div class="logo">
+          <span class="logo-icon"
+            ><img
+              src="./extension/icons/icon64.png"
+              alt="I Look Logo"
+              width="48"
+              height="48"
+          /></span>
+          <h1>I Look</h1>
+        </div>
+        <div class="subtitle">AI를 내 스타일로</div>
+      </header>
+
+      <!-- 탭 메뉴 -->
+      <div class="tabs">
+        <button class="tab active" data-tab="presets">프리셋 테마</button>
+        <button class="tab" data-tab="custom">내 테마</button>
       </div>
-      <div class="subtitle">AI를 내 스타일로</div>
-    </header>
 
-    <!-- 탭 메뉴 -->
-    <div class="tabs">
-      <button class="tab active" data-tab="presets">프리셋 테마</button>
-      <button class="tab" data-tab="custom">내 테마</button>
-    </div>
+      <!-- 프리셋 테마 섹션 -->
+      <div class="tab-content active" id="presets-content">
+        <!-- 테마 그리드 -->
+        <div class="themes-grid" id="themes-grid">
+          <!-- JavaScript로 동적 생성 -->
+        </div>
 
-    <!-- 프리셋 테마 섹션 -->
-    <div class="tab-content active" id="presets-content">
-      <!-- 테마 그리드 -->
-      <div class="themes-grid" id="themes-grid">
-        <!-- JavaScript로 동적 생성 -->
+        <!-- 페이지네이션 -->
+        <div class="pagination">
+          <button class="page-btn" id="prev-page" disabled>
+            <span>◀</span>
+          </button>
+          <span class="page-info">
+            <span id="current-page">1</span> / <span id="total-pages">4</span>
+          </span>
+          <button class="page-btn" id="next-page">
+            <span>▶</span>
+          </button>
+        </div>
       </div>
 
-      <!-- 페이지네이션 -->
-      <div class="pagination">
-        <button class="page-btn" id="prev-page" disabled>
-          <span>◀</span>
+      <!-- 내 테마 섹션 -->
+      <div class="tab-content" id="custom-content">
+        <div class="custom-themes-list" id="custom-themes-list">
+          <div class="empty-state">
+            <span class="empty-icon">🎨</span>
+            <p>아직 저장된 커스텀 테마가 없습니다</p>
+            <p class="empty-hint">아래 버튼으로 나만의 테마를 만들어보세요!</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 커스텀 테마 만들기 버튼 -->
+      <div class="footer">
+        <button class="custom-btn" id="create-custom-btn">
+          <span class="btn-icon">✨</span>
+          직접 커스터마이징하기
         </button>
-        <span class="page-info">
-          <span id="current-page">1</span> / <span id="total-pages">4</span>
-        </span>
-        <button class="page-btn" id="next-page">
-          <span>▶</span>
-        </button>
+      </div>
+
+      <!-- 현재 적용된 테마 표시 -->
+      <div class="current-theme" id="current-theme">
+        <span class="current-label">현재 테마:</span>
+        <span class="current-name" id="current-theme-name">없음</span>
       </div>
     </div>
 
-    <!-- 내 테마 섹션 -->
-    <div class="tab-content" id="custom-content">
-      <div class="custom-themes-list" id="custom-themes-list">
-        <div class="empty-state">
-          <span class="empty-icon">🎨</span>
-          <p>아직 저장된 커스텀 테마가 없습니다</p>
-          <p class="empty-hint">아래 버튼으로 나만의 테마를 만들어보세요!</p>
+    <!-- 커스텀 테마 만들기 모달 -->
+    <div class="modal" id="custom-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>커스텀 테마 만들기</h2>
+          <button class="close-btn" id="close-modal">✕</button>
+        </div>
+
+        <div class="modal-body">
+          <!-- 테마 이름 -->
+          <div class="input-group">
+            <label>테마 이름</label>
+            <input
+              type="text"
+              id="theme-name"
+              placeholder="내 테마"
+              maxlength="20"
+            />
+          </div>
+
+          <!-- 색상 선택 -->
+          <div class="color-section">
+            <h3>색상 설정</h3>
+
+            <div class="color-picker-group">
+              <label>
+                <span class="label-icon">💬</span>
+                채팅 영역 배경
+              </label>
+              <div class="color-input-wrapper">
+                <input type="color" id="color-chat-bg" value="#FFFFFF" />
+                <input
+                  type="text"
+                  class="color-hex"
+                  id="hex-chat-bg"
+                  value="#FFFFFF"
+                  maxlength="7"
+                />
+              </div>
+            </div>
+
+            <div class="color-picker-group">
+              <label>
+                <span class="label-icon">💬</span>
+                채팅 영역 텍스트
+              </label>
+              <div class="color-input-wrapper">
+                <input type="color" id="color-chat-text" value="#1D1C1D" />
+                <input
+                  type="text"
+                  class="color-hex"
+                  id="hex-chat-text"
+                  value="#1D1C1D"
+                  maxlength="7"
+                />
+              </div>
+            </div>
+
+            <div class="color-picker-group">
+              <label>
+                <span class="label-icon">📋</span>
+                사이드바 배경
+              </label>
+              <div class="color-input-wrapper">
+                <input type="color" id="color-sidebar" value="#F8F8F8" />
+                <input
+                  type="text"
+                  class="color-hex"
+                  id="hex-sidebar"
+                  value="#F8F8F8"
+                  maxlength="7"
+                />
+              </div>
+            </div>
+
+            <div class="color-picker-group">
+              <label>
+                <span class="label-icon">📌</span>
+                헤더 배경
+              </label>
+              <div class="color-input-wrapper">
+                <input type="color" id="color-header" value="#FFFFFF" />
+                <input
+                  type="text"
+                  class="color-hex"
+                  id="hex-header"
+                  value="#FFFFFF"
+                  maxlength="7"
+                />
+              </div>
+            </div>
+
+            <div class="color-picker-group">
+              <label>
+                <span class="label-icon">✏️</span>
+                입력창 배경
+              </label>
+              <div class="color-input-wrapper">
+                <input type="color" id="color-input-bg" value="#FFFFFF" />
+                <input
+                  type="text"
+                  class="color-hex"
+                  id="hex-input-bg"
+                  value="#FFFFFF"
+                  maxlength="7"
+                />
+              </div>
+            </div>
+
+            <div class="color-picker-group">
+              <label>
+                <span class="label-icon">🎨</span>
+                강조 색상
+              </label>
+              <div class="color-input-wrapper">
+                <input type="color" id="color-accent" value="#1164A3" />
+                <input
+                  type="text"
+                  class="color-hex"
+                  id="hex-accent"
+                  value="#1164A3"
+                  maxlength="7"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- 폰트 선택 -->
+          <div class="font-section">
+            <h3>폰트 설정</h3>
+            <select id="font-select">
+              <option value="system">시스템 기본</option>
+              <option value="'Pretendard', sans-serif">Pretendard</option>
+              <option value="'Noto Sans KR', sans-serif">Noto Sans KR</option>
+              <option value="'Spoqa Han Sans Neo', sans-serif">
+                Spoqa Han Sans Neo
+              </option>
+              <option value="'IBM Plex Sans KR', sans-serif">
+                IBM Plex Sans KR
+              </option>
+            </select>
+          </div>
+
+          <!-- 미리보기 -->
+          <div class="preview-section">
+            <h3>미리보기</h3>
+            <div class="preview-box" id="preview-box">
+              <div class="preview-chat">
+                <div class="preview-message">안녕하세요! 👋</div>
+                <div class="preview-input">메시지를 입력하세요...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="cancel-btn">취소</button>
+          <button class="btn btn-primary" id="save-custom-btn">저장하기</button>
         </div>
       </div>
     </div>
 
-    <!-- 커스텀 테마 만들기 버튼 -->
-    <div class="footer">
-      <button class="custom-btn" id="create-custom-btn">
-        <span class="btn-icon">✨</span>
-        직접 커스터마이징하기
-      </button>
-    </div>
-
-    <!-- 현재 적용된 테마 표시 -->
-    <div class="current-theme" id="current-theme">
-      <span class="current-label">현재 테마:</span>
-      <span class="current-name" id="current-theme-name">없음</span>
-    </div>
-  </div>
-
-  <!-- 커스텀 테마 만들기 모달 -->
-  <div class="modal" id="custom-modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>커스텀 테마 만들기</h2>
-        <button class="close-btn" id="close-modal">✕</button>
-      </div>
-
-      <div class="modal-body">
-        <!-- 테마 이름 -->
-        <div class="input-group">
-          <label>테마 이름</label>
-          <input type="text" id="theme-name" placeholder="내 테마" maxlength="20">
-        </div>
-
-        <!-- 색상 선택 -->
-        <div class="color-section">
-          <h3>색상 설정</h3>
-          
-          <div class="color-picker-group">
-            <label>
-              <span class="label-icon">💬</span>
-              채팅 영역 배경
-            </label>
-            <div class="color-input-wrapper">
-              <input type="color" id="color-chat-bg" value="#FFFFFF">
-              <input type="text" class="color-hex" id="hex-chat-bg" value="#FFFFFF" maxlength="7">
-            </div>
-          </div>
-
-          <div class="color-picker-group">
-            <label>
-              <span class="label-icon">💬</span>
-              채팅 영역 텍스트
-            </label>
-            <div class="color-input-wrapper">
-              <input type="color" id="color-chat-text" value="#1D1C1D">
-              <input type="text" class="color-hex" id="hex-chat-text" value="#1D1C1D" maxlength="7">
-            </div>
-          </div>
-
-          <div class="color-picker-group">
-            <label>
-              <span class="label-icon">📋</span>
-              사이드바 배경
-            </label>
-            <div class="color-input-wrapper">
-              <input type="color" id="color-sidebar" value="#F8F8F8">
-              <input type="text" class="color-hex" id="hex-sidebar" value="#F8F8F8" maxlength="7">
-            </div>
-          </div>
-
-          <div class="color-picker-group">
-            <label>
-              <span class="label-icon">📌</span>
-              헤더 배경
-            </label>
-            <div class="color-input-wrapper">
-              <input type="color" id="color-header" value="#FFFFFF">
-              <input type="text" class="color-hex" id="hex-header" value="#FFFFFF" maxlength="7">
-            </div>
-          </div>
-
-          <div class="color-picker-group">
-            <label>
-              <span class="label-icon">✏️</span>
-              입력창 배경
-            </label>
-            <div class="color-input-wrapper">
-              <input type="color" id="color-input-bg" value="#FFFFFF">
-              <input type="text" class="color-hex" id="hex-input-bg" value="#FFFFFF" maxlength="7">
-            </div>
-          </div>
-
-          <div class="color-picker-group">
-            <label>
-              <span class="label-icon">🎨</span>
-              강조 색상
-            </label>
-            <div class="color-input-wrapper">
-              <input type="color" id="color-accent" value="#1164A3">
-              <input type="text" class="color-hex" id="hex-accent" value="#1164A3" maxlength="7">
-            </div>
-          </div>
-        </div>
-
-        <!-- 폰트 선택 -->
-        <div class="font-section">
-          <h3>폰트 설정</h3>
-          <select id="font-select">
-            <option value="system">시스템 기본</option>
-            <option value="'Pretendard', sans-serif">Pretendard</option>
-            <option value="'Noto Sans KR', sans-serif">Noto Sans KR</option>
-            <option value="'Spoqa Han Sans Neo', sans-serif">Spoqa Han Sans Neo</option>
-            <option value="'IBM Plex Sans KR', sans-serif">IBM Plex Sans KR</option>
-          </select>
-        </div>
-
-        <!-- 미리보기 -->
-        <div class="preview-section">
-          <h3>미리보기</h3>
-          <div class="preview-box" id="preview-box">
-            <div class="preview-chat">
-              <div class="preview-message">안녕하세요! 👋</div>
-              <div class="preview-input">메시지를 입력하세요...</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn btn-secondary" id="cancel-btn">취소</button>
-        <button class="btn btn-primary" id="save-custom-btn">저장하기</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="popup.js"></script>
-</body>
+    <script src="popup.js"></script>
+  </body>
 </html>
