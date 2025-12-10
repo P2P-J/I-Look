@@ -20,7 +20,13 @@
         "*://gemini.google.com/*",
         "*://grok.com/*"
       ],
-      "js": ["content/content.js"],
+      "js": [
+        "content/platformDetector.js",
+        "content/storageManager.js",
+        "content/styleInjector.js",
+        "content/themeApplier.js",
+        "content/content.js"
+      ],
       "css": ["styles/injected.css"],
       "run_at": "document_end"
     }

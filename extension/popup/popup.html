@@ -11,13 +11,8 @@
       <!-- 헤더 -->
       <header class="header">
         <div class="logo">
-          <span class="logo-icon"
-            ><img
-              src="./extension/icons/icon64.png"
-              alt="I Look Logo"
-              width="48"
-              height="48"
-          /></span>
+          <span class="logo-icon"></span>
+
           <h1>I Look</h1>
         </div>
         <div class="subtitle">AI를 내 스타일로</div>
@@ -238,6 +233,13 @@
       </div>
     </div>
 
+    <!-- 모듈 스크립트 (의존성 순서대로 로드) -->
+    <script src="../content/themes.js"></script>
+    <script src="domManager.js"></script>
+    <script src="colorUtils.js"></script>
+    <script src="themeRenderer.js"></script>
+    <script src="customThemeManager.js"></script>
+    <script src="uiController.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>

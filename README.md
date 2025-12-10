@@ -1,4 +1,4 @@
-# <img src="./extension/icons/icon128.png" alt="I Look Logo" width="128" height="128"> I Look
+# I Look
 
 **AI를 내 스타일대로** - AI 사이트를 위한 테마 커스터마이저
 
@@ -72,12 +72,10 @@ i-look/extension 폴더를 다운로드하세요
 
 ### 프리셋 테마 적용
 
-```
 1. AI 사이트 방문 (claude.ai, chatgpt.com, gemini.google.com)
-2. 툴바에서 I Look 아이콘(<img src="./extension/icons/icon64.png" alt="I Look Logo" width="48" height="48">) 클릭
+2. 툴바에서 I Look 아이콘 클릭
 3. 원하는 테마 클릭
 4. 즉시 적용! ✨
-```
 
 ### 커스텀 테마 만들기
 
