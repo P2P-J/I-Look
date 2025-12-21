@@ -4,78 +4,88 @@
 const SLACK_THEMES = [
   // Page 1 (1-6)
   {
-    id: "aubergine",
-    name: "Aubergine",
-    description: "Slack 기본 다크 테마",
+    id: "midnight-pro",
+    name: "Midnight Pro",
+    description: "전문가를 위한 딥 네이비",
     colors: {
-      primary: "#3F0E40", // 보라
-      sidebar: "#350D36",
-      header: "#350D36",
-      chatBg: "#FAF9FA", // 부드러운 라이트 그레이
-      chatText: "#1D1C1D", // 진한 검정
-      inputBg: "#F4F3F4", // 약간 더 어두운 배경
-      inputBorder: "#8B8085", // 보라빛 그레이
-      accent: "#1164A3",
+      primary: "#0F111A",
+      sidebar: "#0F111A",
+      header: "#0F111A",
+      chatBg: "#13151F",
+      chatText: "#E0E6ED",
+      inputBg: "#1E212E",
+      inputBorder: "#3E445B",
+      accent: "#7D5FFF", // Neon Violet
+      stickyHeader: "#0F111A",
+      userBubble: "#2C2F40", // Slightly lighter navy for user bubble
     },
   },
   {
-    id: "ochin",
-    name: "Ochin",
-    description: "부드러운 베이지 톤",
+    id: "soft-latte",
+    name: "Soft Latte",
+    description: "눈이 편안한 크림 라떼",
     colors: {
-      primary: "#F8F3EB",
-      sidebar: "#EDE6DB",
-      header: "#EDE6DB",
-      chatBg: "#FFFEFB", // 따뜻한 화이트
-      chatText: "#2C2926", // 진한 브라운 블랙
-      inputBg: "#F8F3EB", // 베이지 톤 배경
-      inputBorder: "#C4BCB0", // 베이지 그레이
-      accent: "#0B4C8C",
+      primary: "#F5F1EA",
+      sidebar: "#EBE5DD",
+      header: "#EBE5DD",
+      chatBg: "#FAF8F5",
+      chatText: "#4A4036", // Deep Coffee
+      inputBg: "#F0EBE4",
+      inputBorder: "#D4C5B5",
+      accent: "#9C6F44", // Caramel
+      stickyHeader: "#EBE5DD",
+      userBubble: "#EBE5DD", // Subtle beige for user bubble
     },
   },
   {
-    id: "monument",
-    name: "Monument",
-    description: "모던한 그레이",
+    id: "emerald-city",
+    name: "Emerald City",
+    description: "고급스러운 딥 그린",
     colors: {
-      primary: "#0D7E83",
-      sidebar: "#052D30",
-      header: "#052D30",
-      chatBg: "#F8FAFA", // 시원한 그레이 화이트
-      chatText: "#1A1A1A", // 진한 차콜
-      inputBg: "#F0F4F5", // 청록빛 그레이
-      inputBorder: "#0D7E83", // 테마 primary 색상
-      accent: "#CD2553",
+      primary: "#062C27",
+      sidebar: "#041F1C",
+      header: "#041F1C",
+      chatBg: "#062C27",
+      chatText: "#E6F2F0",
+      inputBg: "#093832",
+      inputBorder: "#1A5E54",
+      accent: "#34D399", // Mint Emerald
+      stickyHeader: "#041F1C",
+      userBubble: "#093832", // Lighter green for user bubble
     },
   },
   {
-    id: "hoth",
-    name: "Hoth",
-    description: "깔끔한 화이트",
+    id: "obsidian",
+    name: "Obsidian",
+    description: "완벽한 리얼 블랙 (OLED)",
     colors: {
-      primary: "#F8F8F8",
-      sidebar: "#F8F8F8",
-      header: "#F8F8F8",
-      chatBg: "#FEFEFE", // 순백에 가까운
-      chatText: "#1A1A1A", // 진한 검정
-      inputBg: "#F4F4F4", // 밝은 그레이
-      inputBorder: "#B8B9BA", // 중간 그레이
-      accent: "#1264A3",
+      primary: "#000000",
+      sidebar: "#000000",
+      header: "#000000",
+      chatBg: "#000000",
+      chatText: "#E5E5E5",
+      inputBg: "#111111",
+      inputBorder: "#333333",
+      accent: "#E2E8F0", // Silver
+      stickyHeader: "#000000",
+      userBubble: "#1A1A1A", // Dark grey for user bubble
     },
   },
   {
-    id: "work-hard",
-    name: "Work Hard",
-    description: "집중력을 높이는 블루",
+    id: "cyber-punk",
+    name: "Cyber Punk",
+    description: "미래지향적 네온",
     colors: {
-      primary: "#4D5055",
-      sidebar: "#3F4147",
-      header: "#3F4147",
-      chatBg: "#FAFBFC", // 쿨 화이트
-      chatText: "#1A1D20", // 다크 차콜
-      inputBg: "#F5F6F7", // 쿨 그레이
-      inputBorder: "#707478", // 미디엄 그레이
-      accent: "#1164A3",
+      primary: "#120B2E",
+      sidebar: "#090518",
+      header: "#090518",
+      chatBg: "#120B2E",
+      chatText: "#E0E0E0",
+      inputBg: "#1F1545",
+      inputBorder: "#00F0FF", // Cyan
+      accent: "#FF00FF", // Magenta
+      stickyHeader: "#090518",
+      userBubble: "#1F1545", // Deep purple for user bubble
     },
   },
   {

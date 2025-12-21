@@ -19,7 +19,7 @@
  *     id: "theme-id",
  *     name: "테마 이름",
  *     colors: { ... },
- *     font: "폰트명"
+
  *   }
  * }
  *

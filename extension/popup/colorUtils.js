@@ -117,17 +117,6 @@ function updatePreview() {
   const chatText = elements.colorChatText.value;
   const inputBg = elements.colorInputBg.value;
   const accent = elements.colorAccent.value;
-  const font = elements.fontSelect.value;
-
-  // 미리보기 박스 스타일 적용
-  elements.previewBox.style.background = chatBg;
-  elements.previewBox.style.color = chatText;
-
-  if (font !== "system") {
-    elements.previewBox.style.fontFamily = font;
-  } else {
-    elements.previewBox.style.fontFamily = "";
-  }
 
   // 메시지 스타일
   if (previewMessage) {
@@ -155,7 +144,6 @@ function setupPreviewListeners() {
     elements.colorHeader,
     elements.colorInputBg,
     elements.colorAccent,
-    elements.fontSelect,
   ];
 
   inputs.forEach((input) => {

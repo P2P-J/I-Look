@@ -24,6 +24,10 @@
         "content/platformDetector.js",
         "content/storageManager.js",
         "content/styleInjector.js",
+        "content/platforms/chatgpt.js",
+        "content/platforms/claude.js",
+        "content/platforms/gemini.js",
+        "content/platforms/grok.js",
         "content/themeApplier.js",
         "content/content.js"
       ],

@@ -199,7 +199,6 @@ async function saveCustomTheme(customThemes, applyThemeCallback) {
         inputBorder: elements.colorAccent.value,
         accent: elements.colorAccent.value,
       },
-      font: elements.fontSelect.value,
     };
 
     // 수정 모드인지 신규 생성인지 판별

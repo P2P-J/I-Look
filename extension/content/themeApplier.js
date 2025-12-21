@@ -49,7 +49,7 @@ let isApplying = false;
  * @param {string} theme.id - 테마 고유 ID
  * @param {string} theme.name - 테마 이름
  * @param {Object} theme.colors - 테마 색상 객체
- * @param {string} theme.font - 폰트명 (선택사항)
+
  * @returns {boolean} 성공 여부
  */
 function applyTheme(theme) {
@@ -59,12 +59,15 @@ function applyTheme(theme) {
     return false;
   }
 
-  // 이미 같은 테마가 적용되어 있는지 확인
-  const currentTheme = window.storageManager.getCurrentTheme();
-  if (currentTheme?.id === theme?.id) {
-    console.log("✅ 동일한 테마가 이미 적용되어 있습니다:", theme.name);
-    return true;
-  }
+  // 중복 적용 방지 로직 제거: SPA 환경에서 DOM이 뒤늦게 로드되거나 변경될 때
+  // MutationObserver가 테마를 다시 적용하려고 해도 이 체크 때문에 막히는 문제가 있었음.
+  // 같은 테마라도 요소가 새로 생기면 스타일을 다시 입혀야 하므로 체크를 해제함.
+
+  // const currentTheme = window.storageManager.getCurrentTheme();
+  // if (currentTheme?.id === theme?.id) {
+  //   console.log("✅ 동일한 테마가 이미 적용되어 있습니다:", theme.name);
+  //   return true;
+  // }
 
   isApplying = true;
 
@@ -79,47 +82,41 @@ function applyTheme(theme) {
   console.log(`✅ ${platform}에 테마 적용: ${theme.name}`);
 
   try {
-    // 2. 플랫폼별 선택자 가져오기
-    const selectors = window.platformDetector.getPlatformSelectors(platform);
     const colors = theme.colors;
+    const isLight = window.styleInjector.isLightTheme(colors.chatBg);
 
-    // 3. Body 배경 설정
-    document.body.style.backgroundColor = colors.chatBg;
-    document.body.style.color = colors.chatText;
+    let cssContent = "";
 
-    // 4. 헤더 적용
-    window.styleInjector.applyStylesToElements(selectors.header, {
-      "background-color": colors.header,
-      color: colors.chatText,
-    });
-
-    // 5. 사이드바 적용
-    window.styleInjector.applyStylesToElements(selectors.sidebar, {
-      "background-color": colors.sidebar,
-      color: colors.chatText,
-    });
-
-    // 6. 채팅 리스트 적용
-    window.styleInjector.applyStylesToElements(selectors.chatArea, {
-      "background-color": colors.chatBg,
-      color: colors.chatText,
-    });
-
-    // 7. 링크 색상 설정
-    const links = document.querySelectorAll('a, [role="link"]');
-    links.forEach((link) => {
-      link.style.color = colors.accent;
-    });
-
-    // 8. 폰트 적용
-    if (theme.font && theme.font !== "system") {
-      document.body.style.fontFamily = theme.font;
+    // 2. 플랫폼별 스타일 생성
+    if (platform === "chatgpt.com" || platform === "chat.openai.com") {
+      if (window.platformChatGPT) {
+        cssContent = window.platformChatGPT.generateStyles(colors, isLight);
+      }
+    } else if (platform === "claude.ai") {
+      if (window.platformClaude) {
+        cssContent = window.platformClaude.generateStyles(colors, isLight);
+      }
+    } else if (platform === "gemini.google.com") {
+      if (window.platformGemini) {
+        cssContent = window.platformGemini.generateStyles(colors, isLight);
+      }
+    } else if (platform === "grok.com") {
+      if (window.platformGrok) {
+        cssContent = window.platformGrok.generateStyles(colors, isLight);
+      }
     }
 
-    // 9. 전역 CSS 주입 (입력창 포함)
-    window.styleInjector.injectGlobalStyles(colors);
+    // fallback for unknown modules or errors
+    if (!cssContent) {
+      console.warn(
+        "플랫폼 모듈을 찾을 수 없어 기본 스타일을 적용하지 않습니다."
+      );
+    } else {
+      // 3. 스타일 주입
+      window.styleInjector.injectGlobalStyles(cssContent);
+    }
 
-    // 10. 현재 테마로 설정
+    // 4. 현재 테마로 설정
     window.storageManager.setCurrentTheme(theme);
 
     console.log("🎨 테마 적용 완료!");

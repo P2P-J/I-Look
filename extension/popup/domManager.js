@@ -62,7 +62,6 @@ const elements = {
   hexInputBg: document.getElementById("hex-input-bg"),
   colorAccent: document.getElementById("color-accent"),
   hexAccent: document.getElementById("hex-accent"),
-  fontSelect: document.getElementById("font-select"),
 
   // 미리보기
   previewBox: document.getElementById("preview-box"),
@@ -89,7 +88,6 @@ function initElements() {
     }
   }
 
-  console.log("✅ DOM 요소 초기화 완료");
   return true;
 }
 

@@ -31,11 +31,23 @@
 /**
  * 저장된 테마를 불러와서 페이지에 적용합니다.
  */
-async function loadAndApplySavedTheme() {
+/**
+ * 저장된 테마를 불러와서 페이지에 적용합니다.
+ * 실패 시 일정 시간 후 재시도합니다 (SPA 로딩 지연 대응).
+ */
+async function loadAndApplySavedTheme(retryCount = 0) {
   try {
     const savedTheme = await window.storageManager.loadSavedTheme();
     if (savedTheme) {
-      window.themeApplier.applyTheme(savedTheme);
+      const success = window.themeApplier.applyTheme(savedTheme);
+
+      // 적용 실패했고 재시도 횟수가 남았다면 재시도
+      if (!success && retryCount < 5) {
+        console.log(`⏳ 테마 적용 재시도 예정 (${retryCount + 1}/5)...`);
+        setTimeout(() => {
+          loadAndApplySavedTheme(retryCount + 1);
+        }, 1000); // 1초 간격 재시도
+      }
     } else {
       console.log("💡 저장된 테마가 없습니다. 기본 스타일을 유지합니다.");
     }

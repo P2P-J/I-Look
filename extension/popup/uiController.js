@@ -108,7 +108,6 @@ function resetCustomForm() {
   elements.hexInputBg.value = "#FFFFFF";
   elements.colorAccent.value = "#1164A3";
   elements.hexAccent.value = "#1164A3";
-  elements.fontSelect.value = "system";
 
   // 미리보기 업데이트
   if (window.colorUtils) {
@@ -141,7 +140,6 @@ function openEditModal(theme, index) {
   elements.hexInputBg.value = theme.colors.inputBg;
   elements.colorAccent.value = theme.colors.accent;
   elements.hexAccent.value = theme.colors.accent;
-  elements.fontSelect.value = theme.font || "system";
 
   // 미리보기 업데이트
   if (window.colorUtils) {

@@ -23,3 +23,21 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
     }
   });
 });
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  // 페이지 로드 완료 시 테마 적용 (새로고침 대응)
+  if (changeInfo.status === "complete") {
+    chrome.storage.local.get("currentTheme", (result) => {
+      if (result.currentTheme) {
+        chrome.tabs
+          .sendMessage(tabId, {
+            action: "applyTheme",
+            theme: result.currentTheme,
+          })
+          .catch(() => {
+            console.log("메시지 전송 실패 - 탭이 닫혔거나 권한 없음");
+          });
+      }
+    });
+  }
+});

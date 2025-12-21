@@ -131,22 +131,64 @@ i-look/extension 폴더를 다운로드하세요
 
 ```
 i-look/
-└── extension/
-    ├── manifest.json          # 확장 프로그램 설정
-    ├── popup/
-    │   ├── popup.html         # 팝업 UI
-    │   ├── popup.css          # 팝업 스타일
-    │   └── popup.js           # 팝업 로직
-    ├── content/
-    │   ├── themes.js          # 24개 테마 데이터
-    │   └── content.js         # 테마 적용 로직
-    ├── styles/
-    │   └── injected.css       # 주입 CSS
-    └── icons/
-        ├── icon16.png         # 16x16 아이콘
-        ├── icon48.png         # 48x48 아이콘
-        └── icon128.png        # 128x128 아이콘
+├── extension/
+│   ├── manifest.json          # 확장 프로그램 설정 및 권한 정의
+│   ├── background.js          # 백그라운드 서비스 워커
+│   ├── content/               # 웹 페이지 주입 스크립트 모음
+│   │   ├── content.js         # 메인 콘텐츠 스크립트 진입점
+│   │   ├── platformDetector.js # AI 플랫폼(Claude, GPT 등) 감지
+│   │   ├── storageManager.js  # 테마 설정 저장소 관리
+│   │   ├── styleInjector.js   # CSS 주입 및 스타일 변경 처리
+│   │   ├── themeApplier.js    # 테마 적용 로직
+│   │   └── themes.js          # 프리셋 테마 데이터
+│   ├── popup/                 # 확장 프로그램 팝업 UI
+│   │   ├── popup.html         # 팝업 HTML 구조
+│   │   ├── popup.css          # 팝업 스타일
+│   │   ├── popup.js           # 팝업 메인 로직
+│   │   ├── uiController.js    # UI 이벤트 및 상태 관리
+│   │   ├── themeRenderer.js   # 테마 목록 렌더링
+│   │   ├── customThemeManager.js # 사용자 커스텀 테마 관리
+│   │   ├── colorUtils.js      # 색상 처리 유틸리티
+│   │   └── domManager.js      # DOM 조작 헬퍼
+│   ├── styles/
+│   │   └── injected.css       # 웹 페이지에 주입되는 기본 CSS
+│   └── icons/                 # 아이콘 리소스
+├── LICENSE                    # 라이선스 (MIT)
+├── COPYRIGHT                  # 저작권 고지
+├── NOTICE                     # 고지 사항
+└── README.md                  # 프로젝트 문서
 ```
+
+---
+
+## 💻 개발자 가이드 (Developer Guide)
+
+### 프로젝트 코드 목적 및 아키텍처
+
+이 프로젝트는 Chrome Extension API를 활용하여 특정 AI 웹사이트의 스타일을 실시간으로 조작하는 것을 목적으로 합니다. 코드는 크게 **Content Script**, **Popup**, **Background** 세 부분으로 나뉩니다.
+
+#### 1. Content Script (`extension/content/`)
+
+웹 페이지에 직접 주입되어 실행되는 스크립트입니다.
+
+- **platformDetector.js**: 현재 접속한 URL을 분석하여 어떤 AI 서비스(Claude, ChatGPT, Gemini 등)인지 식별하고 해당 플랫폼의 DOM 선택자를 반환합니다.
+- **themeApplier.js**: 선택된 테마 색상 정보를 바탕으로 CSS 변수(Custom Properties)를 생성하여 페이지에 적용합니다.
+- **styleInjector.js**: 스타일 변경을 위한 `<style>` 태그를 관리하고 DOM 변화를 감지하여 동적 요소에도 스타일을 유지합니다.
+
+#### 2. Popup (`extension/popup/`)
+
+사용자가 확장 프로그램 아이콘을 클릭했을 때 나타나는 UI입니다.
+
+- **uiController.js**: 탭 전환, 버튼 클릭 등 사용자의 인터랙션을 처리합니다.
+- **customThemeManager.js**: 사용자가 직접 만든 색상 조합을 저장하고 불러오거나 수정하는 로직을 담당합니다.
+- **themeRenderer.js**: 프리셋 테마와 커스텀 테마 목록을 화면에 그립니다.
+
+#### 3. Data Flow
+
+1. 사용자가 Popup에서 테마를 선택합니다.
+2. `storageManager.js`를 통해 Chrome Storage에 설정이 저장됩니다.
+3. Content Script가 Storage 변경을 감지하거나 페이지 로드 시 설정을 읽어옵니다.
+4. `themeApplier.js`가 `platformDetector.js`의 정보를 이용해 적절한 DOM 요소에 스타일을 입힙니다.
 
 ---
 
@@ -236,7 +278,8 @@ AI 사이트가 자주 업데이트되어
 
 ## 📜 라이선스
 
-MIT License
+이 프로젝트는 [MIT License](LICENSE)에 따라 배포됩니다.
+자세한 내용은 `LICENSE`, `COPYRIGHT`, `NOTICE` 파일을 참고하세요.
 
 ---
 
